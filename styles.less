@@ -1,0 +1,127 @@
+// CSS RESET
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+	margin: 0;
+}
+
+body {
+	/* 3. Add accessible line-height */
+	line-height: 1.5;
+	/* 4. Improve text rendering */
+	-webkit-font-smoothing: antialiased;
+}
+
+/* 5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+	text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+/*
+    9. Create a root stacking context
+  */
+#root,
+#__next {
+	isolation: isolate;
+}
+
+// VARIABLES and MIXINS
+@clr-purple-500: #a729f5;
+@clr-grayish-blue-200: #abc1e1;
+@clr-red-400: #ee5454;
+@clr-gray-800: #313e51;
+@clr-gray-700: #3b4d66;
+@clr-gray-600: #626c7f;
+@clr-gray-0: #f4f6fa;
+@clr-white: #ffffff;
+@clr-green-500: #26d782;
+
+@ff-regular: "Rubik", sans-serif;
+@fs-huge: 9rem;
+@fs-large: 4.25rem;
+@fs-big: 2.25rem;
+@fs-regular: 1.75rem;
+@fs-small: 0.75rem;
+
+@lh-100: 1;
+@lh-150: 1.5;
+
+.display {
+	font-size: @fs-huge;
+	line-height: @lh-100;
+	font-weight: bold;
+}
+
+.heading-l-regular {
+	font-size: @fs-large;
+	line-height: @lh-100;
+}
+
+.heading-l-bold {
+	.heading-l-regular();
+	font-weight: bold;
+}
+
+.heading-m-regular {
+	font-size: @fs-big;
+	line-height: @lh-100;
+}
+
+.heading-s-regular {
+	font-size: @fs-regular;
+	line-height: @lh-100;
+}
+
+.body-m-regular {
+	font-size: @fs-small;
+	line-height: @lh-150;
+}
+
+.body-s-italic {
+	font-size: @fs-small;
+	line-height: @lh-150;
+	font-style: italic;
+}

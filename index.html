@@ -24,7 +24,7 @@
 	<body>
 		<main>
 			<header class="header">
-				<h2 class="page-title">
+				<h2 class="theme-title">
 					<span class="title__icon icon">
 						<img
 							src="assets/images/icon-accessibility.svg"
@@ -72,9 +72,7 @@
 			<article class="quiz">
 				<section class="menu">
 					<!-- Quiz menu start -->
-					<h1 class="menu__title">
-						<span>Welcome to the </span>Frontend Quiz!
-					</h1>
+					<h1 class="title"><span>Welcome to the </span>Frontend Quiz!</h1>
 					<p class="menu__cta">Pick a subject to get started.</p>
 					<ul class="menu__list list">
 						<li class="menu__list-item list-item">
@@ -162,15 +160,20 @@
 				</section>
 				<section class="finish">
 					<!-- Quiz completed start -->
-					<h1 class="finish__title">
-						<span>Quiz completed</span> You scored...
-					</h1>
+					<h1 class="title"><span>Quiz completed</span> You scored...</h1>
 					<div class="finish__main">
-						<h2 class="finish__theme-title"></h2>
+						<h2 class="theme-title">
+							<span class="title__icon icon">
+								<img
+									src="assets/images/icon-accessibility.svg"
+									alt=""
+									aria-label="icon-accessibility"
+								/>
+							</span>
+							Accessibility
+						</h2>
 						<p class="finish__score">8</p>
-						<p class="finish__outof">
-							out of <span class="finish__total-questions">10</span>
-						</p>
+						<p>out of <span class="finish__total-questions">10</span></p>
 					</div>
 					<button class="btn" id="finish__again-btn">Play Again</button>
 					<!-- score -->

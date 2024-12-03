@@ -82,6 +82,7 @@ h6 {
 @ff-regular: "Rubik", sans-serif;
 @fs-huge: 9rem;
 @fs-large: 4.25rem;
+@fs-bigger: 2.5rem;
 @fs-big: 2.25rem;
 @fs-regular: 1.75rem;
 @fs-very-small: 1.125rem;
@@ -141,11 +142,6 @@ h6 {
 	justify-content: @position;
 }
 
-// Temporary hide other pages
-.finish {
-	display: none;
-}
-
 // GENERAL STYLES
 body {
 	// background-image: url(assets/images/pattern-background-mobile-light.svg);
@@ -171,9 +167,29 @@ header {
 ul {
 	list-style: none;
 }
+
 .quiz {
 	padding-top: 2rem;
 }
+.title {
+	font-size: @fs-bigger;
+	font-weight: @fw-medium;
+	line-height: @lh-100;
+	span {
+		font-weight: @fw-light;
+	}
+}
+.theme-title {
+	.flex-align-center(flex-start);
+	gap: 1rem;
+	font-size: @fs-very-small;
+	font-weight: @fw-medium;
+
+	.title__icon {
+		background-color: #f6e7ff; //TEMPORARY! Should be assigned programatically
+	}
+}
+
 .list {
 	display: flex;
 	flex-direction: column;
@@ -215,16 +231,6 @@ ul {
 
 // COMPONENTS
 .header {
-	.page-title {
-		.flex-align-center(flex-start);
-		gap: 1rem;
-		font-size: @fs-very-small;
-		font-weight: @fw-medium;
-
-		.title__icon {
-			background-color: #f6e7ff; //TEMPORARY! Should be assigned programatically
-		}
-	}
 	width: 100%;
 	.theme-switcher {
 		.flex-align-center(space-evenly);
@@ -282,13 +288,6 @@ ul {
 
 .menu {
 	display: none;
-	.menu__title {
-		font-size: 2.5rem;
-		line-height: @lh-100;
-		span {
-			font-weight: 100;
-		}
-	}
 	.menu__cta {
 		margin-top: 0.5rem;
 		.body-s-italic();
@@ -328,8 +327,9 @@ ul {
 }
 
 .questions {
-	display: grid;
+	// display: grid;
 	gap: 1rem;
+	display: none;
 	.questions__score {
 		font-size: @fs-smallest;
 		line-height: @lh-150;
@@ -374,6 +374,32 @@ ul {
 		gap: 1rem;
 		.icon {
 			background-color: @clr-gray-0;
+		}
+	}
+}
+
+.finish {
+	display: grid;
+	gap: 1rem;
+	.finish__main {
+		.flex-align-center(center);
+		gap: 1rem;
+		border-radius: 0.75rem;
+		flex-direction: column;
+		background-color: @clr-white;
+		margin-top: 2.5rem;
+		padding: 2rem;
+		font-size: @fs-smaller;
+
+		p {
+			color: @clr-gray-600;
+			line-height: @lh-100;
+		}
+
+		.finish__score {
+			font-size: 5.5rem;
+			line-height: 1;
+			font-weight: @fw-medium;
 		}
 	}
 }

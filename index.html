@@ -146,13 +146,42 @@
 						max="100"
 					></progress>
 					<ul class="questions__answers list">
-						<li class="questions__answer list-item">
-							<p class="icon">A</p>
-							4.5 : 1
+						<li class="questions__answer">
+							<button
+								data-answer="a"
+								class="questions__answer-btn list-item correct"
+							>
+								<span class="icon">A</span>
+								<span class="questions__answer-main">
+									4.5 : 1
+									<img
+										src="assets/images/icon-correct.svg"
+										area-label="correct_answer"
+										alt=""
+								/></span>
+							</button>
 						</li>
-						<li class="questions__answer list-item"><p class="icon">B</p></li>
-						<li class="questions__answer list-item"><p class="icon">C</p></li>
-						<li class="questions__answer list-item"><p class="icon">D</p></li>
+						<li class="questions__answer">
+							<button data-answer="b" class="questions__answer-btn list-item">
+								<span class="icon" active>B</span>
+								3.5 : 2
+								<span class="is_correct"></span>
+							</button>
+						</li>
+						<li class="questions__answer">
+							<button data-answer="c" class="questions__answer-btn list-item">
+								<span class="icon" active>C</span>
+								4 : 1.5
+								<span class="is_correct"></span>
+							</button>
+						</li>
+						<li class="questions__answer">
+							<button data-answer="d" class="questions__answer-btn list-item">
+								<span class="icon" active>D</span>
+								5 : 2
+								<span class="is_correct"></span>
+							</button>
+						</li>
 					</ul>
 					<button class="btn" id="questions__submit-btn">Submit answer</button>
 
@@ -173,7 +202,9 @@
 							Accessibility
 						</h2>
 						<p class="finish__score">8</p>
-						<p>out of <span class="finish__total-questions">10</span></p>
+						<p class="finish__total">
+							out of <span class="finish__total-questions">10</span>
+						</p>
 					</div>
 					<button class="btn" id="finish__again-btn">Play Again</button>
 					<!-- score -->

@@ -23,38 +23,97 @@
 	</head>
 	<body>
 		<main>
-			<header>
+			<header class="header">
 				<div class="page_name">
 					<h2 class="page-title"></h2>
 				</div>
-				<div class="theme-switcher"></div>
+				<div class="theme-switcher">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="none"
+						viewBox="0 0 24 24"
+						class="theme-icon"
+						area-label="icon-sun"
+					>
+						<path
+							fill="#626C7F"
+							d="M12 1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 1 1-1.5 0v-1.5A.75.75 0 0 1 12 1.5Zm0 15a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0-1.5a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm9.75-2.25a.75.75 0 1 0 0-1.5h-1.5a.75.75 0 1 0 0 1.5h1.5ZM12 19.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 1 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75Zm-8.25-6.75a.75.75 0 1 0 0-1.5h-1.5a.75.75 0 1 0 0 1.5h1.5Zm.969-8.031a.75.75 0 0 1 1.062 0l1.5 1.5a.751.751 0 0 1-1.062 1.062l-1.5-1.5a.75.75 0 0 1 0-1.062Zm1.062 14.562a.75.75 0 1 1-1.062-1.06l1.5-1.5a.75.75 0 1 1 1.062 1.06l-1.5 1.5Zm13.5-14.562a.75.75 0 0 0-1.062 0l-1.5 1.5a.751.751 0 0 0 1.062 1.062l1.5-1.5a.75.75 0 0 0 0-1.062Zm-1.062 14.562a.75.75 0 0 0 1.062-1.06l-1.5-1.5a.75.75 0 0 0-1.062 1.06l1.5 1.5Z"
+						/>
+					</svg>
+					<label class="theme-switcher__toggle">
+						<input type="checkbox" checked />
+						<span class="slider"></span>
+					</label>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="none"
+						viewBox="0 0 24 24"
+						class="theme-icon"
+						aria-label="icon-moon"
+					>
+						<path
+							fill="#626C7F"
+							d="M11.775 4.522A7.5 7.5 0 1 1 4.898 16.09c2.104-.57 4.974-1.953 6.24-5.326.828-2.211.876-4.408.637-6.241ZM20.184 12a8.997 8.997 0 0 0-9.315-8.994.75.75 0 0 0-.713.888c.345 1.821.42 4.092-.424 6.342-1.2 3.201-4.203 4.26-6.115 4.606a.75.75 0 0 0-.542 1.066A9 9 0 0 0 20.184 12Z"
+						/>
+					</svg>
+				</div>
 			</header>
 			<article class="quiz">
 				<section class="menu">
 					<!-- Quiz menu start -->
-					<h1 class="menu__title"><span>Welcome to the</span>Frontend Quiz!</h1>
+					<h1 class="menu__title">
+						<span>Welcome to the </span>Frontend Quiz!
+					</h1>
 					<p class="menu__cta">Pick a subject to get started.</p>
-					<ul class="menu__list">
-						<li class="menu__list-item">
+					<ul class="menu__list list">
+						<li class="menu__list-item list-item">
 							<a href="#quiz-questions" data-menu="html" class="menu__link"
+								><span class="menu__icon">
+									<img
+										src="assets/images/icon-html.svg"
+										alt=""
+										aria-label="icon-html"
+									/> </span
 								>HTML</a
 							>
 						</li>
-						<li class="menu__list-item">
+						<li class="menu__list-item list-item">
 							<a href="#quiz-questions" data-menu="css" class="menu__link"
+								><span class="menu__icon">
+									<img
+										src="assets/images/icon-css.svg"
+										alt=""
+										aria-label="icon-css"
+									/> </span
 								>CSS</a
 							>
 						</li>
-						<li class="menu__list-item">
+						<li class="menu__list-item list-item">
 							<a href="#quiz-questions" data-menu="js" class="menu__link"
+								><span class="menu__icon">
+									<img
+										src="assets/images/icon-js.svg"
+										alt=""
+										aria-label="icon-js"
+									/> </span
 								>JavaScript</a
 							>
 						</li>
-						<li class="menu__list-item">
+						<li class="menu__list-item list-item">
 							<a
 								href="#quiz-questions"
 								data-menu="accessibility"
 								class="menu__link"
+								><span class="menu__icon">
+									<img
+										src="assets/images/icon-accessibility.svg"
+										alt=""
+										aria-label="icon-accessibility"
+									/> </span
 								>Accessibility</a
 							>
 						</li>
@@ -70,11 +129,11 @@
 					</h3>
 					<p class="questions__question"></p>
 					<progress id="questions" value="32" max="100"></progress>
-					<ul class="questions__answers">
-						<li class="questions__answer">A</li>
-						<li class="questions__answer">B</li>
-						<li class="questions__answer">C</li>
-						<li class="questions__answer">D</li>
+					<ul class="questions__answers list">
+						<li class="questions__answer list-item">A</li>
+						<li class="questions__answer list-item">B</li>
+						<li class="questions__answer list-item">C</li>
+						<li class="questions__answer list-item">D</li>
 					</ul>
 					<button class="btn" id="questions__submit-btn">Submit answer</button>
 

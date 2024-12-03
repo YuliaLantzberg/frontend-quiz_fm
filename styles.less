@@ -84,8 +84,10 @@ h6 {
 @fs-large: 4.25rem;
 @fs-big: 2.25rem;
 @fs-regular: 1.75rem;
-@fs-small: 0.75rem;
-
+@fs-very-small: 1.125rem;
+@fs-small: 1.5rem;
+@fs-smaller: 1.25rem;
+@fs-smallest: 0.875rem;
 @fw-light: 300;
 @fw-medium: 500;
 @fw-bold: 700;
@@ -128,7 +130,7 @@ h6 {
 }
 
 .body-s-italic {
-	font-size: @fs-small;
+	font-size: @fs-smaller;
 	line-height: @lh-150;
 	font-style: italic;
 }
@@ -140,9 +142,6 @@ h6 {
 }
 
 // Temporary hide other pages
-.questions {
-	display: none;
-}
 .finish {
 	display: none;
 }
@@ -154,6 +153,7 @@ body {
 	place-content: center;
 	font-family: @ff-regular;
 	background-color: @clr-gray-0;
+	color: @clr-gray-800;
 }
 main {
 	padding: 1rem;
@@ -167,6 +167,10 @@ main {
 header {
 	.flex-align-center(space-between);
 }
+
+ul {
+	list-style: none;
+}
 .quiz {
 	padding-top: 2rem;
 }
@@ -174,6 +178,7 @@ header {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	padding: 0;
 }
 
 .list-item {
@@ -183,11 +188,43 @@ header {
 	border-radius: 0.75rem;
 }
 
+.icon {
+	width: 2.5rem;
+	height: 2.5rem;
+	display: block;
+	display: grid;
+	place-content: center;
+	border-radius: 0.3rem;
+	img {
+		width: 1.794rem;
+		height: 1.794rem;
+	}
+}
+
+.btn {
+	background-color: @clr-purple-500;
+	border-radius: 0.75rem;
+	padding: 1rem;
+	color: @clr-white;
+	font-weight: @fw-medium;
+	font-size: @fs-very-small;
+	line-height: @lh-100;
+	text-transform: capitalize;
+	border: none;
+}
+
 // COMPONENTS
 .header {
-	// .page-title::before {
-	// 	content: url(assets/images/icon-accessibility.svg);
-	// }
+	.page-title {
+		.flex-align-center(flex-start);
+		gap: 1rem;
+		font-size: @fs-very-small;
+		font-weight: @fw-medium;
+
+		.title__icon {
+			background-color: #f6e7ff; //TEMPORARY! Should be assigned programatically
+		}
+	}
 	width: 100%;
 	.theme-switcher {
 		.flex-align-center(space-evenly);
@@ -244,10 +281,10 @@ header {
 }
 
 .menu {
+	display: none;
 	.menu__title {
 		font-size: 2.5rem;
 		line-height: @lh-100;
-		color: @clr-gray-800;
 		span {
 			font-weight: 100;
 		}
@@ -259,7 +296,6 @@ header {
 	}
 	.menu__list {
 		padding: 2.5rem 0;
-		list-style: none;
 
 		.menu__list-item {
 			a {
@@ -267,16 +303,11 @@ header {
 				color: @clr-gray-800;
 				.flex-align-center(flex-start);
 				gap: 1rem;
-				font-size: 1.125rem;
+				font-size: @fs-smaller;
 				font-weight: 500;
 
 				.menu__icon {
-					width: 2.5rem;
-					height: 2.5rem;
-					display: block;
 					border-radius: 0.5rem;
-					display: grid;
-					place-content: center;
 
 					&:nth-child(1) {
 						background-color: #fff1e9;
@@ -290,38 +321,59 @@ header {
 					&:nth-child(4) {
 						background-color: #f6e7ff;
 					}
-
-					img {
-						width: 1.794rem;
-						height: 1.794rem;
-					}
 				}
 			}
-			// a:before {
-			// 	width: 2.5rem;
-			// 	height: 2.5rem;
-			// 	display: block;
-			// 	border-radius: 0.5rem;
-			// }
-			// TODO:Temporary css. Should be populated by js
-			// &:nth-child(1) a:before {
-			// 	content: url(assets/images/icon-html.svg);
-			// 	background-color: #fff1e9;
-			// 	width: 28.57px;
-			// 	height: 28.57px;
-			// }
-			// &:nth-child(2) a:before {
-			// 	content: url(assets/images/icon-css.svg);
-			// 	background-color: #e0fdef;
-			// }
-			// &:nth-child(3) a:before {
-			// 	content: url(assets/images/icon-js.svg);
-			// 	background-color: #ebf0ff;
-			// }
-			// &:nth-child(4) a:before {
-			// 	content: url(assets/images/icon-accessibility.svg);
-			// 	background-color: #f6e7ff;
-			// }
+		}
+	}
+}
+
+.questions {
+	display: grid;
+	gap: 1rem;
+	.questions__score {
+		font-size: @fs-smallest;
+		line-height: @lh-150;
+		font-weight: 500;
+		font-style: italic;
+		color: @clr-gray-600;
+	}
+
+	.questions__question {
+		font-weight: @fw-medium;
+		line-height: 1.2;
+		font-size: @fs-smaller;
+	}
+	.questions__progress {
+		width: 100%;
+		background-color: @clr-white;
+		border-radius: 1rem;
+		transition: width 300ms ease;
+		margin-top: 1.5rem;
+		margin-bottom: 2.5rem;
+
+		&[value]::-webkit-progress-bar {
+			width: 100%;
+			height: 1rem;
+			border-radius: 1rem;
+			background-color: @clr-white;
+			border: solid 3px @clr-white;
+			transition: width 300ms ease;
+		}
+
+		&[value]::-webkit-progress-value {
+			border-radius: 1rem;
+			background-color: @clr-purple-500;
+			transition: width 300ms ease;
+		}
+	}
+
+	.questions__answer {
+		font-size: @fs-very-small;
+		font-weight: @fw-medium;
+		.flex-align-center(flex-start);
+		gap: 1rem;
+		.icon {
+			background-color: @clr-gray-0;
 		}
 	}
 }

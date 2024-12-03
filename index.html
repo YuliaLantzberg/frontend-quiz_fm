@@ -24,9 +24,16 @@
 	<body>
 		<main>
 			<header class="header">
-				<div class="page_name">
-					<h2 class="page-title"></h2>
-				</div>
+				<h2 class="page-title">
+					<span class="title__icon icon">
+						<img
+							src="assets/images/icon-accessibility.svg"
+							alt=""
+							aria-label="icon-accessibility"
+						/>
+					</span>
+					Accessibility
+				</h2>
 				<div class="theme-switcher">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +79,7 @@
 					<ul class="menu__list list">
 						<li class="menu__list-item list-item">
 							<a href="#quiz-questions" data-menu="html" class="menu__link"
-								><span class="menu__icon">
+								><span class="menu__icon icon">
 									<img
 										src="assets/images/icon-html.svg"
 										alt=""
@@ -83,7 +90,7 @@
 						</li>
 						<li class="menu__list-item list-item">
 							<a href="#quiz-questions" data-menu="css" class="menu__link"
-								><span class="menu__icon">
+								><span class="menu__icon icon">
 									<img
 										src="assets/images/icon-css.svg"
 										alt=""
@@ -94,7 +101,7 @@
 						</li>
 						<li class="menu__list-item list-item">
 							<a href="#quiz-questions" data-menu="js" class="menu__link"
-								><span class="menu__icon">
+								><span class="menu__icon icon">
 									<img
 										src="assets/images/icon-js.svg"
 										alt=""
@@ -108,7 +115,7 @@
 								href="#quiz-questions"
 								data-menu="accessibility"
 								class="menu__link"
-								><span class="menu__icon">
+								><span class="menu__icon icon">
 									<img
 										src="assets/images/icon-accessibility.svg"
 										alt=""
@@ -127,13 +134,27 @@
 						Question <span class="questions__question-num">6</span> of
 						<span class="questions__total">10</span>
 					</h3>
-					<p class="questions__question"></p>
-					<progress id="questions" value="32" max="100"></progress>
+					<p class="questions__question">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+						debitis atque excepturi pariatur est commodi fugiat amet totam.
+						Laboriosam incidunt nulla est laudantium id. Quo suscipit
+						necessitatibus quaerat nihil earum!
+					</p>
+
+					<progress
+						class="questions__progress"
+						id="progress"
+						value="32"
+						max="100"
+					></progress>
 					<ul class="questions__answers list">
-						<li class="questions__answer list-item">A</li>
-						<li class="questions__answer list-item">B</li>
-						<li class="questions__answer list-item">C</li>
-						<li class="questions__answer list-item">D</li>
+						<li class="questions__answer list-item">
+							<p class="icon">A</p>
+							4.5 : 1
+						</li>
+						<li class="questions__answer list-item"><p class="icon">B</p></li>
+						<li class="questions__answer list-item"><p class="icon">C</p></li>
+						<li class="questions__answer list-item"><p class="icon">D</p></li>
 					</ul>
 					<button class="btn" id="questions__submit-btn">Submit answer</button>
 

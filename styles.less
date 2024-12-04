@@ -238,6 +238,12 @@ a {
 	border: none;
 }
 
+.error {
+	.flex-align-center(center);
+	gap: 1rem;
+	color: @clr-red-400;
+}
+
 // COMPONENTS
 .header {
 	width: 100%;
@@ -392,6 +398,16 @@ a {
 				border: 2px solid @clr-green-500;
 				.icon {
 					background-color: @clr-green-500;
+				}
+				.questions__answer-main {
+					.flex-align-center(space-between);
+					width: 100%;
+				}
+			}
+			&.incorrect {
+				border: 2px solid @clr-red-400;
+				.icon {
+					background-color: @clr-red-400;
 				}
 				.questions__answer-main {
 					.flex-align-center(space-between);

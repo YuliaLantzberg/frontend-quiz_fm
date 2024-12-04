@@ -148,7 +148,7 @@ h6 {
 
 // GENERAL STYLES
 body {
-	// background-image: url(assets/images/pattern-background-mobile-light.svg);
+	background-image: url(assets/images/pattern-background-mobile-light.svg);
 	.flex(center, flex-start);
 	flex-direction: column;
 	font-family: @ff-regular;
@@ -156,8 +156,15 @@ body {
 	color: @clr-gray-800;
 	min-height: 100vh;
 
+	@media (min-width: 48rem) {
+		background-image: url(assets/images/pattern-background-tablet-light.svg);
+		background-repeat: no-repeat;
+	}
+
 	@media (min-width: 90rem) {
 		justify-content: center;
+		background-image: url(assets/images/pattern-background-desktop-light.svg);
+		background-size: cover;
 	}
 }
 main {

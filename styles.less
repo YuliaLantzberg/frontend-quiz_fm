@@ -226,6 +226,7 @@ a {
 	background-color: @clr-white;
 	padding: 0.75rem;
 	border-radius: 0.75rem;
+	cursor: pointer;
 }
 
 .icon {
@@ -249,6 +250,12 @@ a {
 	.heading-s-medium();
 	text-transform: capitalize;
 	border: none;
+	cursor: pointer;
+	transition: opacity 0.3s;
+
+	&:hover {
+		opacity: 0.6;
+	}
 }
 
 .error {

@@ -60,11 +60,11 @@ function renderMenuPage() {
 	// handle events on the menu list
 	const menuList_items = menu_list.querySelectorAll(".menu__list-item");
 	menuList_items[0].focus();
-	menuList_items.forEach((item) => {
+	menuList_items.forEach((item, index, list) => {
 		item.addEventListener("click", () => startQuiz(item));
-		// item.addEventListener("keydown", (e) =>
-		// 	arrowsHandler(e, index, list, PAGES_ENUM.menu)
-		// );
+		item.addEventListener("keydown", (e) =>
+			arrowsHandler(e, index, list, PAGES_ENUM.menu)
+		);
 	});
 }
 
@@ -114,11 +114,19 @@ function renderQuestionPage() {
 
 	currentQuestion.options.forEach((option, index) => {
 		const li = document.createElement("li");
-		li.tabIndex = "0";
+		li.tabIndex = 0;
 		// li.onclick = () => selectOption(index);
 		li.id = option_letters[index];
 		li.classList.add("questions__answer", "list-item");
 		li.addEventListener("click", () => selectOption(index));
+		li.addEventListener("keydown", (e) =>
+			arrowsHandler(
+				e,
+				index,
+				answerOptions.querySelectorAll(".questions__answer"),
+				PAGES_ENUM.questions
+			)
+		);
 
 		const input = document.createElement("input");
 		input.type = "radio";
@@ -143,18 +151,21 @@ function renderQuestionPage() {
 		li.appendChild(label);
 
 		answerOptions.appendChild(li);
+		if (index == 0) li.focus();
 	});
 
 	submitBtn.addEventListener("click", handleBtnClick);
-	// submitBtn.disabled = true;
+	submitBtn.addEventListener("keydown", (e) => {
+		if (e.keyCode === 13) handleBtnClick();
+	});
 }
 function selectOption(index) {
 	console.log("SELECT OPTION");
 	const options = answerOptions.querySelectorAll("li");
 	options.forEach((option) => option.classList.remove("selected"));
 	options[index].classList.add("selected");
-	submitBtn.disabled = false;
 	error_div.style.visibility = "hidden";
+	submitBtn.focus();
 }
 
 function submitAnswer() {
@@ -204,10 +215,12 @@ function nextQuestion() {
 }
 function renderFinalPage() {
 	console.log("FINAL_PAGE");
+
 	const scoreEl = final_page.querySelector(".finish__score");
 	const totalQuestionsEl = final_page.querySelector(".finish__total-questions");
 	const playAgainBtn = final_page.querySelector("#finish__again-btn");
 
+	playAgainBtn.focus();
 	questions_page.style.display = "none";
 	final_page.style.display = "flex";
 
@@ -215,6 +228,10 @@ function renderFinalPage() {
 	totalQuestionsEl.innerText = totalQuestions;
 
 	playAgainBtn.addEventListener("click", renderMenuPage);
+	playAgainBtn.addEventListener("keyDown", (e) => {
+		if (e.keyCode === 13) renderMenuPage();
+		return;
+	});
 }
 
 // HELPER FUNCTIONS
@@ -243,6 +260,46 @@ function handleBtnClick() {
 		submitAnswer();
 	} else {
 		nextQuestion();
+	}
+}
+
+function arrowsHandler(e, index, list, page) {
+	console.log("ARROWS HANDLER");
+	console.log(e.keyCode == "40");
+	switch (e.keyCode) {
+		case 40: // arrow down
+			console.log(e.keyCode);
+			e.currentTarget.blur();
+			if (index >= list.length - 1) {
+				//switch to the first item cuz the last item in the list was clicked - no other way to get down
+				list[0].focus();
+				console.log(list[0]);
+			} else {
+				list[index + 1].focus();
+				console.log(list[index + 1]);
+			}
+			break;
+		case 38: // arrow up
+			e.currentTarget.blur();
+			if (index <= 0) {
+				//switch to the last item cuz it's the first item in the list - no other way to get up
+				list[list.length - 1].focus();
+				console.log(list[list.length - 1]);
+			} else {
+				list[index - 1].focus();
+				console.log(list[index - 1]);
+			}
+			break;
+		case 13: // enter
+			if (page === PAGES_ENUM.menu) {
+				startQuiz(e.currentTarget);
+			} else if (page === PAGES_ENUM.questions) {
+				selectOption(index);
+			}
+			break;
+		default:
+			console.log("default");
+			return;
 	}
 }
 

@@ -2,7 +2,7 @@
 const menu_page = document.getElementById("menu");
 const questions_page = document.getElementById("questions");
 const final_page = document.getElementById("finish");
-
+const theme_switcher = document.querySelector(".theme-switcher__toggle");
 let submitBtn = document.querySelector("#questions__submit-btn");
 
 const answerOptions = questions_page.querySelector(".questions__answers");
@@ -340,8 +340,18 @@ function arrowsHandler(e, index, list, page) {
 	}
 }
 
+// Switch the theme
+function toggleTheme() {
+	document.querySelector("body").classList.toggle("dark");
+	menu_page.classList.toggle("dark");
+	questions_page.classList.toggle("dark");
+	final_page.classList.toggle("dark");
+}
+
 window.onload = async function () {
 	data = await fetchData();
 	// Initialize the app after data was loaded
 	renderMenuPage();
 };
+
+theme_switcher.querySelector("input").addEventListener("change", toggleTheme);

@@ -1,8 +1,9 @@
+// DOM elements
 const menu_page = document.getElementById("menu");
 const questions_page = document.getElementById("questions");
 const final_page = document.getElementById("finish");
 
-const submitBtn = document.querySelector("#questions__submit-btn");
+let submitBtn = document.querySelector("#questions__submit-btn");
 
 const answerOptions = questions_page.querySelector(".questions__answers");
 const error_div = questions_page.querySelector(".error");
@@ -31,13 +32,16 @@ let isAnswerSubmitted = false;
 function renderMenuPage() {
 	console.log("RENDER_MENU_PAGE");
 	console.log(data.quizzes);
-	final_page.style.display = HIDE;
 	menu_page.style.display = SHOW;
+	final_page.style.display = HIDE;
+	questions_page.style.display = HIDE;
+
 	updateHeader(false);
 
-	const menu_list = menu_page.querySelector(".menu__list");
-	const menu_items = data.quizzes.map(
-		(quiz) => `
+	const menuList = menu_page.querySelector(".menu__list");
+	menuList.innerHTML = data.quizzes
+		.map(
+			(quiz) => `
         <li class="menu__list-item list-item" tabindex="0" id=${quiz.title} >
             <input type="radio" class="menu__btn" name="menu_item" value=${quiz.title}>
             <label for=${quiz.title}><span class="menu__icon icon" data-color=${quiz.color}>
@@ -50,22 +54,23 @@ function renderMenuPage() {
 
         </li>
     `
-	);
-	menu_list.innerHTML = menu_items.join("\n");
-	const menu_icons = menu_list.querySelectorAll(".menu__icon");
-	menu_icons.forEach((icon) => {
+		)
+		.join("");
+
+	const menuIcons = menuList.querySelectorAll(".menu__icon");
+	menuIcons.forEach((icon) => {
 		icon.style.backgroundColor = icon.getAttribute("data-color");
 	});
 
 	// handle events on the menu list
-	const menuList_items = menu_list.querySelectorAll(".menu__list-item");
-	menuList_items[0].focus();
-	menuList_items.forEach((item, index, list) => {
+	const menuItems = menuList.querySelectorAll(".menu__list-item");
+	menuItems.forEach((item, index) => {
 		item.addEventListener("click", () => startQuiz(item));
 		item.addEventListener("keydown", (e) =>
-			arrowsHandler(e, index, list, PAGES_ENUM.menu)
+			arrowsHandler(e, index, menuItems, PAGES_ENUM.menu)
 		);
 	});
+	setFocus(menuItems, 0);
 }
 
 function startQuiz(menuItem) {
@@ -84,6 +89,13 @@ function startQuiz(menuItem) {
 function renderQuestionPage() {
 	console.log("RENDER QUESTION PAGE");
 
+	menu_page.style.display = HIDE;
+	questions_page.style.display = SHOW;
+
+	const topicData = data.quizzes.find(
+		(quiz) => quiz.title.toLowerCase() === currentTopic.toLowerCase()
+	);
+
 	const questionsTotalHtmlEl =
 		questions_page.querySelector(".questions__total");
 	const questionNumHtmlEl = questions_page.querySelector(
@@ -92,14 +104,7 @@ function renderQuestionPage() {
 	const questionHtmlEl = questions_page.querySelector(".questions__question");
 	const progressBar = questions_page.querySelector("#progress");
 
-	const topicData = data.quizzes.find(
-		(quiz) => quiz.title.toLowerCase() === currentTopic.toLowerCase()
-	);
-
 	currentQuestion = topicData.questions[currentQuestionIndex];
-
-	menu_page.style.display = HIDE;
-	questions_page.style.display = SHOW;
 
 	totalQuestions = topicData.questions.length;
 	progressBar.value = currentQuestionIndex + 1;
@@ -115,19 +120,9 @@ function renderQuestionPage() {
 	currentQuestion.options.forEach((option, index) => {
 		const li = document.createElement("li");
 		li.tabIndex = 0;
-		// li.onclick = () => selectOption(index);
+
 		li.id = option_letters[index];
 		li.classList.add("questions__answer", "list-item");
-		li.addEventListener("click", () => selectOption(index));
-		li.addEventListener("keydown", (e) =>
-			arrowsHandler(
-				e,
-				index,
-				answerOptions.querySelectorAll(".questions__answer"),
-				PAGES_ENUM.questions
-			)
-		);
-
 		const input = document.createElement("input");
 		input.type = "radio";
 		input.name = "answer-option";
@@ -150,35 +145,53 @@ function renderQuestionPage() {
 		li.appendChild(input);
 		li.appendChild(label);
 
+		li.addEventListener("click", () => selectOption(index));
+		li.addEventListener("keydown", (e) =>
+			arrowsHandler(e, index, answerOptions.children, PAGES_ENUM.questions)
+		);
+
 		answerOptions.appendChild(li);
-		if (index == 0) li.focus();
+		// if (index == 0) li.focus();
+		// else li.blur();
 	});
 
-	submitBtn.addEventListener("click", handleBtnClick);
-	submitBtn.addEventListener("keydown", (e) => {
-		if (e.keyCode === 13) handleBtnClick();
-	});
+	submitBtn = resetSubmitButtonListeners();
+	submitBtn.textContent = "Submit answer";
+	submitBtn.addEventListener("click", handleSubmitOrNext);
+
+	submitBtn.addEventListener("keydown", (e) =>
+		arrowsHandler(
+			e,
+			answerOptions.children.length,
+			answerOptions.children,
+			PAGES_ENUM.questions
+		)
+	);
+
+	setFocus(answerOptions.children, 0);
 }
 function selectOption(index) {
 	console.log("SELECT OPTION");
-	const options = answerOptions.querySelectorAll("li");
-	options.forEach((option) => option.classList.remove("selected"));
-	options[index].classList.add("selected");
+	[...answerOptions.children].forEach((child) =>
+		child.classList.remove("selected")
+	);
+
+	answerOptions.children[index].classList.add("selected");
 	error_div.style.visibility = "hidden";
-	submitBtn.focus();
 }
 
 function submitAnswer() {
 	console.log("SUBMIT ANSWER");
 	const selected = answerOptions.querySelector(".selected");
 	if (!selected) {
-		console.log("no selected");
 		error_div.style.visibility = "visible";
 		return;
 	}
 
 	const selectedOption = selected.querySelector("input").value;
 	const selectedSpanIcon = selected.querySelector(".questions__answer-main");
+
+	let result = "";
 
 	if (selectedOption === currentQuestion.answer) {
 		console.log("CORRECT");
@@ -196,7 +209,6 @@ function submitAnswer() {
 	img.ariaLabel = result;
 
 	selectedSpanIcon.textContent = selectedOption;
-	selectedSpanIcon.append = selectedOption;
 	selectedSpanIcon.appendChild(img);
 
 	submitBtn.textContent =
@@ -216,25 +228,33 @@ function nextQuestion() {
 function renderFinalPage() {
 	console.log("FINAL_PAGE");
 
+	questions_page.style.display = HIDE;
+	final_page.style.display = SHOW;
+
 	const scoreEl = final_page.querySelector(".finish__score");
 	const totalQuestionsEl = final_page.querySelector(".finish__total-questions");
 	const playAgainBtn = final_page.querySelector("#finish__again-btn");
+	const headerThemeTitle = document.querySelector(".theme-title");
+	const themeTitle = final_page.querySelector(".theme-title");
 
-	playAgainBtn.focus();
-	questions_page.style.display = "none";
-	final_page.style.display = "flex";
-
+	themeTitle.innerHTML = headerThemeTitle.innerHTML;
+	themeTitle.style.visibility = "visible";
 	scoreEl.innerText = correctAnswers;
 	totalQuestionsEl.innerText = totalQuestions;
 
 	playAgainBtn.addEventListener("click", renderMenuPage);
-	playAgainBtn.addEventListener("keyDown", (e) => {
-		if (e.keyCode === 13) renderMenuPage();
-		return;
-	});
+	// playAgainBtn.addEventListener("keyDown", (e) => {
+	// 	if (e.keyCode === 13) renderMenuPage();
+	// 	return;
+	// });
 }
 
-// HELPER FUNCTIONS
+function handleSubmitOrNext() {
+	if (isAnswerSubmitted) nextQuestion();
+	else submitAnswer();
+}
+
+// UTILITY FUNCTIONS
 async function fetchData() {
 	try {
 		const response = await fetch("data.json");
@@ -256,6 +276,7 @@ function updateHeader(isVisible, menuLiElement) {
 
 function handleBtnClick() {
 	console.log("HANDLE BTN CLICK");
+	console.trace();
 	if (!isAnswerSubmitted) {
 		submitAnswer();
 	} else {
@@ -263,43 +284,59 @@ function handleBtnClick() {
 	}
 }
 
+function resetSubmitButtonListeners() {
+	const newBtn = submitBtn.cloneNode(true);
+	submitBtn.parentNode.replaceChild(newBtn, submitBtn);
+	return document.querySelector("#questions__submit-btn");
+}
+
+function setFocus(elements, index) {
+	console.log(elements, index);
+	if (elements[index]) elements[index].focus();
+}
+
 function arrowsHandler(e, index, list, page) {
 	console.log("ARROWS HANDLER");
-	console.log(e.keyCode == "40");
+	const listLength = list.length;
 	switch (e.keyCode) {
 		case 40: // arrow down
-			console.log(e.keyCode);
-			e.currentTarget.blur();
-			if (index >= list.length - 1) {
-				//switch to the first item cuz the last item in the list was clicked - no other way to get down
-				list[0].focus();
-				console.log(list[0]);
+			e.preventDefault();
+			if (index === listLength - 1) {
+				// Move from the last answer to the submit button
+				submitBtn.focus();
+			} else if (index === listLength) {
+				// Wrap around from submit button to the first answer
+				setFocus(list, 0);
 			} else {
-				list[index + 1].focus();
-				console.log(list[index + 1]);
+				// Navigate within the options
+				setFocus(list, index + 1);
 			}
 			break;
 		case 38: // arrow up
-			e.currentTarget.blur();
-			if (index <= 0) {
-				//switch to the last item cuz it's the first item in the list - no other way to get up
-				list[list.length - 1].focus();
-				console.log(list[list.length - 1]);
+			e.preventDefault();
+			if (index === listLength) {
+				// Move from submitBtn to the last answer
+				setFocus(list, listLength - 1);
 			} else {
-				list[index - 1].focus();
-				console.log(list[index - 1]);
+				// Navigate within the options or wrap around
+				setFocus(list, index > 0 ? index - 1 : listLength - 1);
 			}
 			break;
-		case 13: // enter
+		case 13: // Enter
+			e.preventDefault();
 			if (page === PAGES_ENUM.menu) {
-				startQuiz(e.currentTarget);
+				startQuiz(list[index]);
 			} else if (page === PAGES_ENUM.questions) {
-				selectOption(index);
+				if (index === listLength) {
+					submitBtn.click(); // Handle submit button
+				} else {
+					list[index].click(); // Handle answer selection
+				}
 			}
 			break;
+
 		default:
-			console.log("default");
-			return;
+			break;
 	}
 }
 

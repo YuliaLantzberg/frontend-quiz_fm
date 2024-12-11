@@ -149,6 +149,7 @@ h6 {
 // GENERAL STYLES
 body {
 	background-image: url(assets/images/pattern-background-mobile-light.svg);
+	background-repeat: no-repeat;
 	.flex(center, flex-start);
 	flex-direction: column;
 	font-family: @ff-regular;
@@ -169,6 +170,7 @@ body {
 
 	&.dark {
 		background-image: url(assets/images/pattern-background-mobile-dark.svg);
+		background-repeat: no-repeat;
 		background-color: @clr-gray-800;
 		color: @clr-white;
 
@@ -178,6 +180,8 @@ body {
 
 		@media (min-width: 90rem) {
 			background-image: url(assets/images/pattern-background-desktop-dark.svg);
+			background-size: cover;
+			justify-content: center;
 		}
 
 		.theme-switcher path {

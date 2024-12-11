@@ -43,7 +43,7 @@ function renderMenuPage() {
 		.map(
 			(quiz) => `
         <li class="menu__list-item list-item" tabindex="0" id=${quiz.title} >
-            <input type="radio" class="menu__btn" name="menu_item" value=${quiz.title}>
+            <input type="radio" class="menu__btn" id=${quiz.title} name="menu_item" value=${quiz.title}>
             <label for=${quiz.title}><span class="menu__icon icon" data-color=${quiz.color}>
                     <img
                         src=${quiz.icon}
@@ -127,6 +127,7 @@ function renderQuestionPage() {
 		input.type = "radio";
 		input.name = "answer-option";
 		input.value = option;
+		input.id = option_letters[index];
 
 		const label = document.createElement("label");
 		label.for = option_letters[index];
